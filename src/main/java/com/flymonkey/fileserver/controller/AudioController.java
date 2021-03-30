@@ -4,9 +4,7 @@ import com.flymonkey.fileserver.decrypt.Md5Util;
 import com.flymonkey.fileserver.file.ReadUtil;
 import com.flymonkey.fileserver.file.WriteUtil;
 import com.flymonkey.fileserver.mo.FileMo;
-import com.flymonkey.fileserver.mo.UserEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
+import com.flymonkey.fileserver.mo.PageMo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,31 +15,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.*;
 
 @Controller
-@RequestMapping("/one")
-public class OneController {
+@RequestMapping("/audio")
+public class AudioController {
 
 
-    @GetMapping(value = "/test")
+    @GetMapping(value = "/welcome")
     public ModelAndView test(HttpServletRequest req) throws Exception {
-        // UserEntity userEntity = getCurrentUser(req);
-        UserEntity user = new UserEntity();
-        user.setName("tom");
-        ModelAndView mv = new ModelAndView();
+       ModelAndView mv = new ModelAndView();
         String index = req.getParameter("index");
-        int count = 0;
+        int count = 1;
         try {
             count = Integer.valueOf(index);
         } catch (Exception e) {
         }
-        mv.addObject("user", user);
-        mv.addObject("count", count + 1);
-        List<FileMo> list = WriteUtil.listFileName(count);
-        mv.addObject("list", list);
-        mv.setViewName("/user/show.html");
+        PageMo mo = WriteUtil.listFileName(count - 1);
+        mv.addObject("list", mo.getList());
+        mv.addObject("text","第"+count+"页，共"+mo.getTotalPage()+"页");
+
+        mv.setViewName("/audio/audio.html");
         return mv;
     }
 

@@ -3,7 +3,7 @@
            th:replace="layout/layout(title='数据',cssPaths='/public/css/plugins/jsTree/style.min.css',jsPaths='/modular/receiveOrder/wmsReceiveOrder.js')">
 <head>
     <meta charset="UTF-8">
-    <title>Show User</title>
+    <title>page</title>
     <style>
         body {
             line-height: 1.6em;
@@ -11,22 +11,32 @@
 
         #div1 {
             font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-            font-size: 12px;
+            font-size: 50px;
             background: #fff;
             margin: 45px;
-            width: 480px;
+            width: 100%;
             border-collapse: collapse;
-            text-align: left;
+            text-align: center;
+            alignment: center;
         }
-
+        #div1 botton{
+            font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+            font-size: 50px;
+            background: #fff;
+            margin: 45px;
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            alignment: center;
+        }
         #hor-minimalist-a {
             font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
             font-size: 12px;
             background: #fff;
             margin: 45px;
-            width: 480px;
+            width: 80%;
             border-collapse: collapse;
-            text-align: left;
+            text-align: center;
         }
 
         #hor-minimalist-a th {
@@ -36,11 +46,18 @@
             padding: 10px 8px;
             border-bottom: 2px solid #6678b1;
         }
-
         #hor-minimalist-a td {
-            height: 80px;
+            height: 50px;
+        }
+        .stream {
+            width: 50%;
+            float: left;
         }
 
+         .text{
+             width: 50%;
+             float: right;
+        }
         #hor-minimalist-a td {
             color: #669;
             padding: 9px 8px 0px 8px;
@@ -53,38 +70,37 @@
     <script>
 
         function getFile() {
-            window.location.href = "/one/test?index=" + document.getElementById("page").value;
+            window.location.href = "/audio/welcome?index=" + document.getElementById("page").value;
         }
     </script>
 </head>
 <body>
 <div id="div1">
     <p>
-        <th:block th:text="@{'第'+${count}+'页'}"/>
+        <th:block th:text="${text}"/>
     </p>
     <input name="页码" id="page">
     <button onclick="getFile()" type="button">翻页</button>
 </div>
-<audio controls="controls" src="/one/download2">
-</audio>
-<!--<audio controls="controls" src="/one/download">-->
+<!--<audio controls="controls" src="/audio/download2">-->
 <!--</audio>-->
-<table style="width: auto" id="hor-minimalist-a">
+<!--<audio controls="controls" src="/audio/download">-->
+<!--</audio>-->
+<table  id="hor-minimalist-a">
     <thead>
     <tr>
         <th>名称</th>
     </tr>
     </thead>
+
     <tbody th:each="fileMo:${list}">
     <tr>
-        <td>
+        <td class="stream">
             <audio controls="controls"
-                   th:src="@{'/one/download?filename='+${fileMo.realName}+'&fileLength='+${fileMo.fileLength}}">
+                   th:src="@{'/audio/download?filename='+${fileMo.realName}+'&fileLength='+${fileMo.fileLength}}">
             </audio>
         </td>
-    </tr>
-    <tr>
-        <td th:text="${fileMo.showName}"></td>
+        <td class="text" th:text="${fileMo.showName}"></td>
     </tr>
     </tbody>
 </table>

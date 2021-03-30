@@ -3,6 +3,7 @@ package com.flymonkey.fileserver.file;
 import com.flymonkey.fileserver.decrypt.Md5Util;
 import com.flymonkey.fileserver.decrypt.RSAUtil;
 import com.flymonkey.fileserver.mo.FileMo;
+import com.flymonkey.fileserver.mo.PageMo;
 
 import java.io.*;
 import java.net.URLEncoder;
@@ -254,8 +255,10 @@ public class WriteUtil {
         }
     }
 
-    public static List<FileMo> listFileName(int count) throws Exception {
+    public static PageMo listFileName(int count) throws Exception {
+        PageMo pageMo = new PageMo();
         List<FileMo> list = new ArrayList<>();
+        pageMo.setList(list);
         File file = new File(SUM_INDEX_FILE);
         List<String> strs = ReadUtil.readFile2List(SUM_INDEX_FILE, FILE_ENCODING);
         for (int i = 10 * count; i < 10 + 10 * count && i < strs.size(); i++
@@ -268,7 +271,10 @@ public class WriteUtil {
             mo.setFileLength(Long.valueOf(arrary[2]));
             list.add(mo);
         }
-        return list;
+        int length = strs.size();
+        int totalPage = length/10+(length%10 >0?1:0);
+        pageMo.setTotalPage(totalPage);
+        return pageMo;
     }
 
 

@@ -2,7 +2,7 @@ server:
   port=8080
 spring:
   application:
-    name=fileserver2
+    name=videoplay
   thymeleaf:
     #模板的模式，支持 HTML, XML TEXT JAVASCRIPT
     mode: HTML5

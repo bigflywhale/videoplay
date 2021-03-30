@@ -129,10 +129,17 @@ public class AudioController {
     public void downloadFile1(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //设置文件路径
         String realPath = request.getParameter("filename");//index文件路径
+        String realname = request.getParameter("realname");//index文件路径
         String lengthStr = request.getParameter("fileLength");//实际文件总长度
         int fileLength = Integer.valueOf(lengthStr);
+
         realPath = URLDecoder.decode(realPath, "utf-8");
-        response.setHeader("Content-Type", "audio/mpeg");
+        if(realname.endsWith(".m4a")){
+            response.setHeader("Content-Type", "audio/mp4a-latm");
+        }else {
+
+            response.setHeader("Content-Type", "audio/mpeg");
+        }
         String rangeString = request.getHeader("Range");//如果是video标签发起的请求就不会为null
         FileInputStream fis = null;
         BufferedInputStream bis = null;

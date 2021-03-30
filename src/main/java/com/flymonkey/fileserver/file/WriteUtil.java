@@ -12,7 +12,7 @@ import java.util.List;
 
 public class WriteUtil {
     public final static String SEPARATOR = java.io.File.separator;
-    public static final String DATA_DIR = "e:/fileserverdir";
+    public static final String DATA_DIR = "D:\\fileserver";
     public static final String DESTINATION_DIR = DATA_DIR + SEPARATOR + "destination";
     public static final String ORIGIN_DIR_OR_FILE = DATA_DIR + SEPARATOR + "origin";
     public static final String INDEX_DIR = DESTINATION_DIR + SEPARATOR + "index";
@@ -70,7 +70,20 @@ public class WriteUtil {
         }
 
     }
+    public static void replacePath(String indexdir,String org, String newStr) throws IOException {
+        File file = new File(indexdir);
+        List<File> list = new ArrayList<>();
+        getAllChildFile(file,list);
 
+
+        for (File f : list
+        ) {
+            String content = ReadUtil.readFile2Str(f.getAbsolutePath(), "gbk");
+             content =content.replace(org,newStr);
+             WriteUtil.replaceFile(f.getAbsolutePath(),content);
+        }
+
+    }
     public static void oldIndex2new(String indexdir, String sumIndexDir) throws IOException {
         File file = new File(indexdir);
         List<File> list = new ArrayList<>();
@@ -119,21 +132,28 @@ public class WriteUtil {
 
     public static void main(String[] args) throws Exception {
 //        sum2Split();
-        oldIndex2new(INDEX_DIR,SUM_INDEX_FILE);
+//        oldIndex2new(INDEX_DIR,SUM_INDEX_FILE);
+//        replacePath(INDEX_DIR,"d:\\fileserver\\cut","d:\\fileserver\\destination\\cut");
+        append2SumIndex();
     }
 
     public static void append2SumIndex() throws IOException {
-        File index = new File(INDEX_DIR);
-        File[] index_files = index.listFiles();
+
+        File file = new File(INDEX_DIR);
+        List<File> list = new ArrayList<>();
+        getAllChildFile(file,list);
         StringBuilder sb = new StringBuilder();
-        for (File f : index_files) {
+        for (File f : list) {
+            if (SUM_INDEX_FILE_NAME.equals(f.getName())) {
+                continue;
+            }
             String s = ReadUtil.readFile2Str(f.getPath(), FILE_ENCODING);
             sb.append(f.getAbsolutePath());
             sb.append("#");
             String[] arrary = s.split("#");
-            sb.append(arrary[0]);
+            sb.append(arrary[1]);
             sb.append("#");
-            sb.append(arrary[2]);
+            sb.append(arrary[0]);
             sb.append("\r\n");
         }
         WriteUtil.append2File(SUM_INDEX_FILE, sb.toString());

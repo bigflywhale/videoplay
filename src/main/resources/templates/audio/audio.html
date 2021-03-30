@@ -151,7 +151,7 @@
     <tr>
         <td class="stream">
             <audio controls="controls"
-                   th:src="@{'/audio/download?filename='+${fileMo.realName}+'&fileLength='+${fileMo.fileLength}}">
+                   th:src="@{'/audio/download?filename='+${fileMo.realName}+'&fileLength='+${fileMo.fileLength}+'&realname='+${fileMo.showName}}">
             </audio>
 
         <div>

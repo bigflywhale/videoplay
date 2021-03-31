@@ -35,7 +35,7 @@ public class AudioController {
         mv.addObject("list", mo.getList());
         mv.addObject("text","第"+count+"页，共"+mo.getTotalPage()+"页");
 
-        mv.setViewName("/audio/audio.html");
+        mv.setViewName("/audio/audio");
         return mv;
     }
 

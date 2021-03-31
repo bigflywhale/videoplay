@@ -10,9 +10,6 @@
         }
 
 
-
-
-
         #hor-minimalist-a {
             font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
             font-size: 12px;
@@ -21,7 +18,7 @@
             width: 80%;
             border-collapse: collapse;
             text-align: center;
-            clear:both;
+            clear: both;
         }
 
         #hor-minimalist-a th {
@@ -36,7 +33,6 @@
             height: 50px;
             alignment: center;
         }
-
 
 
         #hor-minimalist-a td {
@@ -129,18 +125,16 @@
     </script>
 </head>
 <body>
- <div>
-
-        <th:block th:text="${text}"/>
-
+<div>
+    <th:block th:text="${text}"/>
+</div>
+<div>
+    <div style="width: 90px; float: left; "><input id="page" class="tl-price-input" type="text" placeholder="输入跳转页码">
     </div>
-    <div>
-        <div style="width: 90px; "><input id="page" class="tl-price-input" type="text" placeholder="输入跳转页码">
-        </div>
-        <div style="width: 60px;margin-left: 20px">
-            <button class="ant-btn ant-btn-red" onclick="getFile()">跳转</button>
-        </div>
+    <div style="width: 60px;margin-left: 20px;float: left">
+        <button class="ant-btn ant-btn-red" onclick="getFile()">跳转</button>
     </div>
+</div>
 
 <!--<audio controls="controls" src="/audio/download2">-->
 <!--</audio>-->
@@ -154,9 +148,9 @@
                    th:src="@{'/audio/download?filename='+${fileMo.realName}+'&fileLength='+${fileMo.fileLength}}">
             </audio>
 
-        <div>
-            <th:block th:text="${fileMo.showName}"/>
-        </div>
+            <div>
+                <th:block th:text="${fileMo.showName}"/>
+            </div>
         </td>
     </tr>
     </tbody>

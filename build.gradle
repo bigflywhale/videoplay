@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
-    maven{
+    maven {
         url 'http://maven.aliyun.com/nexus/content/groups/public/'
     }
     mavenCentral()
@@ -18,10 +18,9 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    compile("org.springframework.boot:spring-boot-devtools")
-    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-devtools'
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.12'
-// https://mvnrepository.com/artifact/com.j256.simplemagic/simplemagic
     implementation group: 'com.j256.simplemagic', name: 'simplemagic', version: '1.16'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

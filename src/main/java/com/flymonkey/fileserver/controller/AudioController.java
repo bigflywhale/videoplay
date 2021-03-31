@@ -24,7 +24,7 @@ public class AudioController {
 
     @GetMapping(value = "/welcome")
     public ModelAndView test(HttpServletRequest req) throws Exception {
-       ModelAndView mv = new ModelAndView();
+        ModelAndView mv = new ModelAndView();
         String index = req.getParameter("index");
         int count = 1;
         try {
@@ -33,7 +33,7 @@ public class AudioController {
         }
         PageMo mo = WriteUtil.listFileName(count - 1);
         mv.addObject("list", mo.getList());
-        mv.addObject("text","第"+count+"页，共"+mo.getTotalPage()+"页");
+        mv.addObject("text", "第" + count + "页，共" + mo.getTotalPage() + "页");
 
         mv.setViewName("/audio/audio");
         return mv;
@@ -129,14 +129,21 @@ public class AudioController {
     public void downloadFile1(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //设置文件路径
         String realPath = request.getParameter("filename");//index文件路径
+        String realname = request.getParameter("realname");
         String lengthStr = request.getParameter("fileLength");//实际文件总长度
         int fileLength = Integer.valueOf(lengthStr);
+
         realPath = URLDecoder.decode(realPath, "utf-8");
-        response.setHeader("Content-Type", "audio/mpeg");
+        if (realname.endsWith(".m4a")) {
+            response.setHeader("Content-Type", "audio/mp4a-latm");
+        } else {
+
+            response.setHeader("Content-Type", "audio/mpeg");
+        }
         String rangeString = request.getHeader("Range");//如果是video标签发起的请求就不会为null
         FileInputStream fis = null;
         BufferedInputStream bis = null;
-        String content = ReadUtil.readFile2Str(realPath, "gbk");
+        String content = ReadUtil.readFile2Str(WriteUtil.INDEX_DIR + realPath, "gbk");
         String[] indexContentArray = content.split("#");//分割index文件内容
         String content_range = "";
         String content_length = "";
@@ -179,7 +186,7 @@ public class AudioController {
 
         for (int i = 2; i < indexContentArray.length; i++) {//前两个分别为文件名的RSA以及文件大小
             String cutFilePath = indexContentArray[i];//cut文件路径
-            List<byte[]> cutFileContent = ReadUtil.readStream(cutFilePath, WriteUtil.BYTE_LENGTH);
+            List<byte[]> cutFileContent = ReadUtil.readStream(WriteUtil.CUT_DIR + cutFilePath, WriteUtil.BYTE_LENGTH);
             for (int j = cutFileContent.size(); j > 0; j--) {//倒着读取
                 int byteLenth = cutFileContent.get(j - 1).length;
                 int startPosition = 0;
@@ -204,6 +211,26 @@ public class AudioController {
             if (break_flag) {
                 break;
             }
+        }
+        os.close();
+    }
+
+    @RequestMapping("/download3")
+    public void downloadFile3(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置文件路径
+
+
+        response.setHeader("Content-Type", "application/zip");
+        response.addHeader("Content-Disposition", "attachment;fileName=1.zip");// 设置文件名
+
+        OutputStream os = response.getOutputStream();
+
+        FileInputStream fileInputStream = new FileInputStream(new File("D:\\file\\fileserver.zip"));
+
+        int length = 0;
+        byte[] bytes = new byte[1024 * 8];
+        while ((length = fileInputStream.read(bytes)) != 0) {
+            os.write(bytes);
         }
         os.close();
     }

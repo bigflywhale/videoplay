@@ -26,6 +26,11 @@ public class AudioController {
     public ModelAndView test(HttpServletRequest req) throws Exception {
         ModelAndView mv = new ModelAndView();
         String index = req.getParameter("index");
+        String code = req.getParameter("code");
+        String md5 = Md5Util.encrypt(code);
+        if(!md5.equals(Md5Util.MD5_STR)){
+            return null;
+        }
         int count = 1;
         try {
             count = Integer.valueOf(index);

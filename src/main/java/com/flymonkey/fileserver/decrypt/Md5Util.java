@@ -11,9 +11,9 @@ import java.util.List;
 public class Md5Util {
 
     private static final String slat = "!@#$%^&*()_+";
-
+    public static final String MD5_STR = "3ee86dec1d31afc1176a997f9fe875ac";
     public static void main(String[] args) {
-        System.out.println(encrypt("1Tdhblk@1Tdhblk@"));
+        System.out.println(encrypt("q"));
     }
 
     public static String encrypt(String dataStr) {
